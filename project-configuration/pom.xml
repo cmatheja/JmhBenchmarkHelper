@@ -9,7 +9,7 @@
     <packaging>pom</packaging>
 
     <properties>
-        <benchmarkHelper.version>0.0.1-SNAPSHOT</benchmarkHelper.version>
+        <benchmarkHelper.version>0.0.1</benchmarkHelper.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <jmh.version>1.19</jmh.version>
         <javac.target>1.8</javac.target>
