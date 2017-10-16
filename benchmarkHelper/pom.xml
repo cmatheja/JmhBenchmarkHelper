@@ -4,7 +4,7 @@
 
   <groupId>de.rwth.i2.attestor</groupId>
   <artifactId>JmhBenchmarkHelper</artifactId>
-  <version>0.0.1-SNAPSHOT</version>
+  <version>0.0.1</version>
   <packaging>jar</packaging>
 
   <name>JmhBenchmarkHelper</name>
@@ -32,7 +32,7 @@
         <dependency>
             <groupId>de.rwth.i2</groupId>
             <artifactId>attestor</artifactId>
-            <version>0.0.6-SNAPSHOT</version>
+            <version>0.1.0</version>
         </dependency>
     </dependencies>
   <build>
