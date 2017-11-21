@@ -27,7 +27,7 @@
     <dependency>
       <groupId>de.rwth.i2</groupId>
       <artifactId>attestor</artifactId>
-      <version>0.1.4-SNAPSHOT</version>
+      <version>0.1.5-SNAPSHOT</version>
     </dependency>
   </dependencies>
   <build>
