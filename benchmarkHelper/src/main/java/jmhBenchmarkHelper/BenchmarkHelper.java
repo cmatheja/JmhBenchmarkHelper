@@ -2,11 +2,9 @@ package jmhBenchmarkHelper;
 
 import de.rwth.i2.attestor.main.Attestor;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 public class BenchmarkHelper {
+
+    private static boolean CHECK_EXPECTED_SIZE = System.getProperty("attestor.checkExpectedSize").equalsIgnoreCase("true");
 
     public static void run() {
         String methodName = Thread.currentThread().getStackTrace()[2].getMethodName();
@@ -52,7 +50,7 @@ public class BenchmarkHelper {
 
     private static void failOnMismatch(long actual, long expected, String message) {
 
-        if(actual != expected) {
+        if(CHECK_EXPECTED_SIZE && actual != expected) {
             throw new IllegalStateException(message + "\nexpected: " + expected + "\ngot: " + actual);
         }
     }
