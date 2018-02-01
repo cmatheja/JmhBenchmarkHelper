@@ -104,6 +104,7 @@
                         </goals>
                         <configuration>
                             <arguments>
+                                <argument>-Dattestor.ne=true</argument>
                                 <argument>-Dattestor.checkExpectedSize=true</argument>
                                 <argument>-Djmh.ignoreLock=true</argument>
                                 <argument>-jar</argument>
@@ -114,6 +115,29 @@
                                 <argument>1</argument>
                                 <argument>-rf</argument>
                                 <argument>text</argument>
+                                <argument>-foe</argument>
+                                <argument>true</argument>
+                            </arguments>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>runWithReport</id>
+                        <goals>
+                            <goal>exec</goal>
+                        </goals>
+                        <configuration>
+                            <arguments>
+                                <argument>-Dattestor.checkExpectedSize=true</argument>
+                                <argument>-Djmh.ignoreLock=true</argument>
+                                <argument>-jar</argument>
+                                <argument>${project.build.directory}${file.separator}benchmarks.jar</argument>
+                                <argument>-bm</argument>
+                                <argument>ss</argument>
+                                <argument>-f</argument>
+                                <argument>1</argument>
+                                <argument>-rf</argument>
+                                <argument>text</argument>
+                                <argument>-foe</argument>
                                 <argument>true</argument>
                             </arguments>
                         </configuration>
@@ -135,6 +159,7 @@
                                 <argument>1</argument>
                                 <argument>-rf</argument>
                                 <argument>text</argument>
+                                <argument>-foe</argument>
                                 <argument>true</argument>
                             </arguments>
                         </configuration>
