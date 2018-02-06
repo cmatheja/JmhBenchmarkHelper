@@ -1,92 +1,138 @@
 <?xml version="1.0"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <modelVersion>4.0.0</modelVersion>
-  <groupId>de.rwth.i2.attestor</groupId>
-  <artifactId>JmhBenchmarkHelper</artifactId>
-  <version>0.3.0-SNAPSHOT</version>
-  <packaging>jar</packaging>
-  <name>JmhBenchmarkHelper</name>
-  <properties>
-    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <maven.compiler.source>1.8</maven.compiler.source>
-    <maven.compiler.target>1.8</maven.compiler.target>
-    <!-- github server corresponds to entry in ~/.m2/settings.xml -->
-    <github.global.server>github</github.global.server>
-  </properties>
-  <repositories>
-    <repository>
-      <id>mvn-repo</id>
-      <url>https://raw.githubusercontent.com/cmatheja/mvn-repo/master/</url>
-      <snapshots>
-        <enabled>true</enabled>
-        <updatePolicy>always</updatePolicy>
-      </snapshots>
-    </repository>
-  </repositories>
-  <dependencies>
-    <dependency>
-      <groupId>de.rwth.i2</groupId>
-      <artifactId>attestor</artifactId>
-      <version>0.3.0-SNAPSHOT</version>
-    </dependency>
-  </dependencies>
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>de.rwth.i2</groupId>
+    <artifactId>attestor-benchmark-helper</artifactId>
+    <version>0.3.2</version>
+    <packaging>jar</packaging>
+
+
+    <name>Attestor Benchmark Helper</name>
+    <description>Utility package to specify attestor benchmarks.</description>
+    <url>https://github.com/cmatheja/JmhBenchmarkHelper</url>
+
+
+    <licenses>
+        <license>
+            <name>GNU General Public License, version 3</name>
+            <url>https://opensource.org/licenses/GPL-3.0</url>
+        </license>
+    </licenses>
+
+
+    <developers>
+        <developer>
+            <name>Christoph Matheja</name>
+            <email>matheja@cs.rwth-aachen.de</email>
+            <organization>Software Modeling and Verification Group - RWTH Aachen University</organization>
+            <organizationUrl>https://moves.rwth-aachen.de/</organizationUrl>
+        </developer>
+        <developer>
+            <name>Dr. Christina Jansen</name>
+            <email>christina.jansen@cs.rwth-aachen.de</email>
+            <organization>Software Modeling and Verification Group - RWTH Aachen University</organization>
+            <organizationUrl>https://moves.rwth-aachen.de/</organizationUrl>
+        </developer>
+        <developer>
+            <name>Hannah Arndt</name>
+            <email>hannah.arndt@rwth-aachen.de</email>
+            <organization>Software Modeling and Verification Group - RWTH Aachen University</organization>
+            <organizationUrl>https://moves.rwth-aachen.de/</organizationUrl>
+        </developer>
+    </developers>
+
+
+    <scm>
+        <connection>scm:git:git://github.com/cmatheja/JmhBenchmarkHelper.git</connection>
+        <developerConnection>scm:git:ssh://github.com/cmatheja/JmhBenchmarkHelper.git</developerConnection>
+        <url>https://github.com/cmatheja/JmhBenchmarkHelper/tree/master</url>
+    </scm>
+
+
+    <properties>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
+    </properties>
+
+
+    <distributionManagement>
+        <snapshotRepository>
+            <id>ossrh</id>
+            <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+        </snapshotRepository>
+    </distributionManagement>
+
+
+
+
+
   <build>
     <plugins>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-install-plugin</artifactId>
-        <version>2.5.2</version>
-        <configuration>
-          <groupId>de.rwth.i2.attestor</groupId>
-          <artifactId>${project.artifactId}</artifactId>
-          <version>${project.version}</version>
-          <packaging>jar</packaging>
-          <file>${basedir}/target/${project.artifactId}-${project.version}.jar</file>
-          <localRepositoryPath>${basedir}/target/dependencies/maven-repo/</localRepositoryPath>
-          <generatePom>true</generatePom>
-        </configuration>
-        <executions>
-          <execution>
-            <id>install-jar-lib</id>
-            <goals>
-              <goal>install-file</goal>
-            </goals>
-            <phase>install</phase>
-          </execution>
-        </executions>
-      </plugin>
-      <plugin>
-        <artifactId>maven-deploy-plugin</artifactId>
-        <version>2.8.1</version>
-        <configuration>
-          <altDeploymentRepository>internal.repo::default::file://${project.build.directory}/mvn-repo</altDeploymentRepository>
-        </configuration>
-      </plugin>
-      <plugin>
-        <groupId>com.github.github</groupId>
-        <artifactId>site-maven-plugin</artifactId>
-        <version>0.12</version>
-        <configuration>
-          <message>Deployment of ${project.artifactId} ${project.version}</message>
-          <noJekyll>true</noJekyll>
-          <merge>true</merge>
-          <outputDirectory>${project.build.directory}/mvn-repo</outputDirectory>
-          <branch>refs/heads/master</branch>
-          <includes>
-            <include>**/*</include>
-          </includes>
-          <repositoryName>mvn-repo</repositoryName>
-          <repositoryOwner>cmatheja</repositoryOwner>
-        </configuration>
-        <executions>
-          <execution>
-            <goals>
-              <goal>site</goal>
-            </goals>
-            <phase>deploy</phase>
-          </execution>
-        </executions>
-      </plugin>
+        <plugin>
+            <groupId>org.sonatype.plugins</groupId>
+            <artifactId>nexus-staging-maven-plugin</artifactId>
+            <version>1.6.8</version>
+            <extensions>true</extensions>
+            <configuration>
+                <serverId>ossrh</serverId>
+                <nexusUrl>https://oss.sonatype.org/</nexusUrl>
+                <autoReleaseAfterClose>true</autoReleaseAfterClose>
+            </configuration>
+        </plugin>
+        <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-source-plugin</artifactId>
+            <version>3.0.1</version>
+            <executions>
+                <execution>
+                    <id>attach-sources</id>
+                    <goals>
+                        <goal>jar-no-fork</goal>
+                    </goals>
+                </execution>
+            </executions>
+        </plugin>
+        <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-javadoc-plugin</artifactId>
+            <version>3.0.0</version>
+            <executions>
+                <execution>
+                    <id>attach-javadocs</id>
+                    <goals>
+                        <goal>jar</goal>
+                    </goals>
+                </execution>
+            </executions>
+        </plugin>
+        <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-gpg-plugin</artifactId>
+            <version>1.6</version>
+            <executions>
+                <execution>
+                    <id>sign-artifacts</id>
+                    <phase>verify</phase>
+                    <goals>
+                        <goal>sign</goal>
+                    </goals>
+                </execution>
+            </executions>
+        </plugin>
     </plugins>
   </build>
+
+
+    <dependencies>
+        <dependency>
+            <groupId>de.rwth.i2</groupId>
+            <artifactId>attestor</artifactId>
+            <version>0.3.1</version>
+        </dependency>
+    </dependencies>
+
+
 </project>

@@ -23,6 +23,9 @@ public class BenchmarkHelper {
     private boolean checkCounterexampleNumber;
     private int expectedCounterexampleNumber;
 
+    private boolean autosetRootPath = true;
+    private String rootPath = ".";
+
     private StringBuilder errorBuilder = new StringBuilder();
 
     BenchmarkHelper() {
@@ -71,17 +74,29 @@ public class BenchmarkHelper {
             benchmarkHelper.expectedCounterexampleNumber = noCounterexamples;
             return this;
         }
+
+        public BenchmarkHelperBuilder setRootPath(String rootPath) {
+            benchmarkHelper.autosetRootPath = false;
+            benchmarkHelper.rootPath = rootPath;
+            return this;
+        }
     }
 
     public void run() {
 
-        String methodName = Thread.currentThread().getStackTrace()[2].getMethodName();
+        StackTraceElement stackTraceElement = Thread.currentThread().getStackTrace()[2];
+        String methodName = stackTraceElement.getMethodName();
+
+        if(autosetRootPath) {
+            rootPath = "./" + stackTraceElement.getClassName();
+        }
+
         Attestor attestor = new Attestor();
         attestor.run(new String[]{
-                "-sf",
-                "configuration/settings/" + methodName + ".json",
                 "-rp",
-                "."
+                rootPath,
+                "-sf",
+                "configuration/settings/" + methodName + ".json"
         });
 
         if(!CHECK_EXPECTED_SIZE) {
