@@ -24,7 +24,7 @@ public class BenchmarkHelper {
     private int expectedCounterexampleNumber;
 
     private boolean autosetRootPath = true;
-    private String rootPath = ".";
+    private String rootPath;
 
     private StringBuilder errorBuilder = new StringBuilder();
 
@@ -88,7 +88,9 @@ public class BenchmarkHelper {
         String methodName = stackTraceElement.getMethodName();
 
         if(autosetRootPath) {
-            rootPath = "./" + stackTraceElement.getClassName();
+            String className = stackTraceElement.getClassName();
+            className = className.substring(className.lastIndexOf(".")+1);
+            rootPath = "./" + className;
         }
 
         Attestor attestor = new Attestor();
