@@ -23,6 +23,8 @@ public class BenchmarkHelper {
     private boolean checkCounterexampleNumber;
     private int expectedCounterexampleNumber;
 
+    private boolean expectFatal =false;
+
     private boolean autosetRootPath = true;
     private String rootPath;
 
@@ -78,6 +80,11 @@ public class BenchmarkHelper {
         public BenchmarkHelperBuilder setRootPath(String rootPath) {
             benchmarkHelper.autosetRootPath = false;
             benchmarkHelper.rootPath = rootPath;
+            return this;
+        }
+
+        public BenchmarkHelperBuilder expectFatal() {
+            benchmarkHelper.expectFatal = true;
             return this;
         }
     }
@@ -142,6 +149,14 @@ public class BenchmarkHelper {
                     attestor.getCounterexamples().size(),
                     expectedCounterexampleNumber,
                     "Number of generated counterexamples does not match."
+            );
+        }
+
+        if(expectFatal) {
+            failOnMismatch(
+                    attestor.hasFatalError(),
+                    expectFatal,
+                    "Expected fatal error, e.g. a detected null pointer dereference."
             );
         }
 
