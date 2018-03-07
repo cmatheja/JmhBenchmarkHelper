@@ -2,11 +2,23 @@ package jmhBenchmarkHelper;
 
 import de.rwth.i2.attestor.main.Attestor;
 
+import java.io.IOException;
+import java.nio.charset.Charset;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
+import java.util.Collections;
+import java.util.Locale;
+import java.util.Map;
+
 public class BenchmarkHelper {
 
     private static boolean CHECK_EXPECTED_SIZE = System
             .getProperty("attestor.checkExpectedSize")
             .equalsIgnoreCase("true");
+
+    private final static Path file = Paths.get("benchmark-results.csv");
 
     private boolean checkLTLResults;
     private boolean expectedLTLResults;
@@ -164,6 +176,10 @@ public class BenchmarkHelper {
         if(!errorMessage.isEmpty()) {
             throw new IllegalStateException("\n" + errorMessage);
         }
+
+        logResults(attestor);
+
+
     }
 
     private void failOnMismatch(long actual, long expected, String message) {
@@ -181,6 +197,35 @@ public class BenchmarkHelper {
     private void failOnMismatch(boolean actual, boolean expected, String message) {
         if(actual != expected) {
             storeFailure(actual, expected, message);
+        }
+    }
+
+    private void logResults(Attestor attestor) {
+
+        try {
+            StringBuilder lineBuilder = new StringBuilder();
+
+            lineBuilder.append(attestor.getInputName())
+                    .append(",")
+                    .append(attestor.getSpecificationDescription())
+                    .append(",")
+                    .append(attestor.getTotalNumberOfStates())
+                    .append(",");
+
+            Map<String, Double> executionTimes = attestor.getExecutionTimes();
+
+            lineBuilder.append(String.format(Locale.ROOT, "%.3f", executionTimes.get("Interprocedural Analysis")))
+                    .append(",")
+                    .append(String.format(Locale.ROOT, "%.3f", executionTimes.get("Model checking")))
+                    .append(",")
+                    .append(String.format(Locale.ROOT, "%.3f", executionTimes.get("Verification")))
+                    .append(",")
+                    .append(String.format(Locale.ROOT, "%.3f", executionTimes.get("Total")));
+
+            Files.write(file, Collections.singletonList(lineBuilder.toString()),
+                    Charset.forName("UTF-8"), StandardOpenOption.CREATE, StandardOpenOption.APPEND);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
