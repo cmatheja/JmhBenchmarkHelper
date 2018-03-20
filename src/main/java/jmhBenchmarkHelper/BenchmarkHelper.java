@@ -212,6 +212,7 @@ public class BenchmarkHelper {
             lineBuilder.append(attestor.getDescription())
                     .append(",")
                     .append(attestor.getTotalNumberOfStates())
+                    .append(",")
                     .append(String.format(Locale.ROOT, "%.3f", executionTimes.get("Interprocedural Analysis")))
                     .append(",")
                     .append(String.format(Locale.ROOT, "%.3f", executionTimes.get("Model checking")))
