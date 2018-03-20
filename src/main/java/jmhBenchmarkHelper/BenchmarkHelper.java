@@ -116,8 +116,8 @@ public class BenchmarkHelper {
         attestor.run(new String[]{
                 "-rp",
                 rootPath,
-                "-sf",
-                "configuration/settings/" + methodName + ".json"
+                "-l",
+                "configuration/settings/" + methodName + ".attestor"
         });
 
         if(!CHECK_EXPECTED_SIZE) {
@@ -205,12 +205,7 @@ public class BenchmarkHelper {
         try {
             StringBuilder lineBuilder = new StringBuilder();
 
-            lineBuilder.append(attestor.getInputName())
-                    .append(",")
-                    .append(attestor.getSpecificationDescription())
-                    .append(",")
-                    .append(attestor.getTotalNumberOfStates())
-                    .append(",");
+            lineBuilder.append(attestor.getDescription());
 
             Map<String, Double> executionTimes = attestor.getExecutionTimes();
 
