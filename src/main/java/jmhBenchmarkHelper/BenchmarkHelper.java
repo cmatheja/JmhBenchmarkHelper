@@ -205,11 +205,14 @@ public class BenchmarkHelper {
         try {
             StringBuilder lineBuilder = new StringBuilder();
 
-            lineBuilder.append(attestor.getDescription());
+
 
             Map<String, Double> executionTimes = attestor.getExecutionTimes();
 
-            lineBuilder.append(String.format(Locale.ROOT, "%.3f", executionTimes.get("Interprocedural Analysis")))
+            lineBuilder.append(attestor.getDescription())
+                    .append(",")
+                    .append(attestor.getTotalNumberOfStates())
+                    .append(String.format(Locale.ROOT, "%.3f", executionTimes.get("Interprocedural Analysis")))
                     .append(",")
                     .append(String.format(Locale.ROOT, "%.3f", executionTimes.get("Model checking")))
                     .append(",")
